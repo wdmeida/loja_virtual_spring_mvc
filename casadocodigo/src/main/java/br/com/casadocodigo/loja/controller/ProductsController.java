@@ -5,8 +5,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.casadocodigo.loja.daos.ProductDAO;
+import br.com.casadocodigo.loja.models.BookType;
 import br.com.casadocodigo.loja.models.Product;
 
 @Controller
@@ -24,8 +26,14 @@ public class ProductsController {
 	}//save()
 	
 	//Mapeia o formulário para que seja acessado via browser.
-	@RequestMapping("/produtos/form")
-	public String form() {
-		return "products/form";
+	@RequestMapping("/form")
+	public ModelAndView form() {
+		//Define no construtor para qual view será devolvida um objeto ModelAndView.
+		ModelAndView modelAndView = new ModelAndView("products/form");
+		
+		//Seta os atributos e devolve o objeto.
+		modelAndView.addObject("types", BookType.values());
+		
+		return modelAndView;
 	}//form()
 }//class ProductsController
