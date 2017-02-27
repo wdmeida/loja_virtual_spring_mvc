@@ -15,7 +15,8 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	 */
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{ AppWebConfiguration.class };
+		return new Class[]{ AppWebConfiguration.class,
+							JPAConfiguration.class };
 	}
 	
 	//Define o padrão de endereço que vai ser delegado para o Servlet do Spring MVC.
@@ -24,4 +25,4 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	protected String[] getServletMappings() {
 		return new String[] {"/"};
 	}
-}
+}//class ServletSpringMVC

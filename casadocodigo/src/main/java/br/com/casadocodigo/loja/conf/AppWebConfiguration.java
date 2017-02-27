@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.casadocodigo.loja.controller.HomeController;
+import br.com.casadocodigo.loja.daos.ProductDAO;
 
 /*
  * O objetivo dessa classe é expor para o Servlet do Spring MVC quais são as classes
@@ -21,7 +22,8 @@ import br.com.casadocodigo.loja.controller.HomeController;
  * 	Suporte a geração de RSS.
  */
 @EnableWebMvc
-@ComponentScan(basePackageClasses={HomeController.class})
+@ComponentScan(basePackageClasses={HomeController.class,
+								   ProductDAO.class })
 public class AppWebConfiguration {
 	
 	//Annotation @Bean indica para o Spring que o retorno desse método deve ser registrado como 
