@@ -1,7 +1,9 @@
 package br.com.casadocodigo.loja.conf;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -38,5 +40,27 @@ public class AppWebConfiguration {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}//internalResourceViewResolver()
+	
+	/*
+	 * Define onde o Spring deve buscar as mensagens a serem exibidas ao usuário em caso de erros,
+	 * a codificação utilizada e o tempo que as mesmas devem ser recarregadas para a memória. Em 
+	 * ambiente de desenvolvimento, isso evita que tenhamos que reiniciar o servidor a cada nova
+	 * mensagem inserida.
+	 * 
+	 * Outro ponto importante, é que o nome do método deve ser messageSource. O Spring MVC vai procurar
+	 * um Bean registrado com eesse nome para carregar as mensagens. Uma alternativa, para não ter que
+	 * se preocupar com o nome é utilizar o atributo name da annottion @Bean:
+	 * 
+	 * 	@Bean(name="messageSource")
+	 * 	public MessageSource loadBundle(){ ... }
+	 */
+	@Bean
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource bundleMessageSource = new ReloadableResourceBundleMessageSource();
+		bundleMessageSource.setBasename("/WEB-INF/messages");
+		bundleMessageSource.setDefaultEncoding("UTF-8");
+		bundleMessageSource.setCacheSeconds(1);
+		return bundleMessageSource;
+	}
 	
 }//class AppWebConfiguration

@@ -1,9 +1,13 @@
 package br.com.casadocodigo.loja.controller;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,11 +16,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.casadocodigo.loja.daos.ProductDAO;
 import br.com.casadocodigo.loja.models.BookType;
 import br.com.casadocodigo.loja.models.Product;
+import br.com.casadocodigo.loja.validation.ProductValidator;
 
 @Controller
 @Transactional //Informa que métodos da classe precisam de transação.
 @RequestMapping("/produtos") //Anota o endereço base de todos os métodos da classe.
 public class ProductsController {
+	
+	//Informa ao Spring MVC qual validador deve ser usado.
+	@InitBinder
+	protected void initBinder (WebDataBinder binder) {
+		binder.setValidator(new ProductValidator());
+	}//initBinder()
 	
 	//Indica que deve ser injetada uma instância de ProductDAO.
 	@Autowired
@@ -35,9 +46,12 @@ public class ProductsController {
 	
 	//Salva um novo produto no banco de dados.
 	@RequestMapping(method = RequestMethod.POST)
-	public String save(Product product, RedirectAttributes redirectAttributes) {
-		productDAO.save(product);
+	public ModelAndView save(@Valid Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
+		//Utiliza o objeto bindingResult para verificar se existem erros de validação.
+		if(bindingResult.hasErrors()) return form();
+		
+		productDAO.save(product);
 		/*
 		 * Utiliza um objeto da interface RedirectAttributes para enviar uma mensagem
 		 * ao usuário. Todo objeto adicionado nela, através do método addFlashAttributes,
@@ -47,7 +61,7 @@ public class ProductsController {
 		 * 		${sucesso }
 		 */
 		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso");
-		return "redirect:produtos";
+		return new ModelAndView("redirect:produtos");
 	}//save()
 	
 	//Lista os produtos cadastrados no banco de dados.
