@@ -25,7 +25,7 @@ public class Product {
 	private String description;
 	private int pages;
 	@ElementCollection
-	private List<Price> prives = new ArrayList<>();
+	private List<Price> prices = new ArrayList<>();
 	
 	public Integer getId() {
 		return id;
@@ -35,12 +35,12 @@ public class Product {
 		this.id = id;
 	}
 
-	public List<Price> getPrives() {
-		return prives;
+	public List<Price> getPrices() {
+		return prices;
 	}
 
-	public void setPrives(List<Price> prives) {
-		this.prives = prives;
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
 	}
 
 	public String getTitle() {
