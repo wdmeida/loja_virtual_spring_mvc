@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //Indica que será usado o controle transacional do Spring.
 @EnableTransactionManagement
 public class JPAConfiguration {
-	
+	//Define o pacote onde estão as classes modelo, que serão mapeadas para persistência dos dados.
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -31,6 +31,7 @@ public class JPAConfiguration {
 		return em;
 	}//entityManagerFactoryBean()
 	
+	//Registra o driver e as configurações de acesso a base de dados utilizada.
 	@Bean
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -42,6 +43,7 @@ public class JPAConfiguration {
 		return dataSource;
 	}//dataSource()
 	
+	//Define algumas configurações adicionais em utilizadas em produção.
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");

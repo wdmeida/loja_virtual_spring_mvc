@@ -24,7 +24,7 @@ public class ProductValidator implements Validator {
 	/*
 	 * O método validate recebe como argumento o objeto a ser validado, no caso especificado
 	 * pelo parâmetro target e um outro objeto do tipo Errors, onde vamos guardando cada uma
-	 * das falhas de validação. A classe ValidationUtils é um helper do Sprin Validation para
+	 * das falhas de validação. A classe ValidationUtils é um helper do Spring Validation para
 	 * realizar algumas validações básicas. Os métodos reject possuem a seguinte assinatura:
 	 * 	
 	 * 	public static void rejectIfEmpty(Errors errors, String field,
@@ -47,5 +47,4 @@ public class ProductValidator implements Validator {
 		if (product.getPages() == 0)
 			errors.rejectValue("pages", "field.required");
 	}//validate()
-
-}
+}//class ProductValidator
