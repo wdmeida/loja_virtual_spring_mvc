@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import br.com.casadocodigo.loja.controller.HomeController;
 import br.com.casadocodigo.loja.daos.ProductDAO;
 import br.com.casadocodigo.loja.io.FileSaver;
+import br.com.casadocodigo.loja.models.ShoppingCart;
 
 /*
  * O objetivo dessa classe é expor para o Servlet do Spring MVC quais são as classes que devem ser 
@@ -32,7 +33,8 @@ import br.com.casadocodigo.loja.io.FileSaver;
 @EnableWebMvc
 @ComponentScan(basePackageClasses={HomeController.class,
 								   ProductDAO.class,
-								   FileSaver.class })
+								   FileSaver.class,
+								   ShoppingCart.class })
 public class AppWebConfiguration {
 	
 	/*
@@ -49,6 +51,7 @@ public class AppWebConfiguration {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
+		resolver.setExposedContextBeanNames("shoppingCart");
 		return resolver;
 	}//internalResourceViewResolver()
 	

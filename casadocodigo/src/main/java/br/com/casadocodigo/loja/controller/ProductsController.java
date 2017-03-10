@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,18 +38,16 @@ public class ProductsController {
 	@Autowired
 	private ProductDAO productDAO;
 		
-	//Mapeia o formulário para que seja acessado via browser.
 	@RequestMapping("/form")
 	public ModelAndView form(Product product) {
+	
 		//Define no construtor para qual view será devolvida um objeto ModelAndView.
 		ModelAndView modelAndView = new ModelAndView("products/form");
-		//Seta os atributos e devolve o objeto.
 		modelAndView.addObject("types", BookType.values());
 		
 		return modelAndView;
 	}//form()
 	
-	//Salva um novo produto no banco de dados.
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView save(MultipartFile summary ,@Valid Product product, 
 							BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -72,12 +71,22 @@ public class ProductsController {
 		return new ModelAndView("redirect:produtos");
 	}//save()
 	
-	//Lista os produtos cadastrados no banco de dados.
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView list() {
+		
 		ModelAndView modelAndView = new ModelAndView("products/list");
 		modelAndView.addObject("products", productDAO.list());
 		
 		return modelAndView;
-	}//list
+	}//list()
+	
+	@RequestMapping("/{id}")
+	public ModelAndView show(@PathVariable("id") Integer id) {
+		
+		ModelAndView modelAndView = new ModelAndView("products/show");
+		Product product = productDAO.find(id);
+		modelAndView.addObject("product", product);
+		
+		return modelAndView;
+	}//show()
 }//class ProductsController
