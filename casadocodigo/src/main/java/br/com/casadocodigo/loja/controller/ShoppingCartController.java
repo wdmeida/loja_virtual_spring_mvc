@@ -33,4 +33,9 @@ public class ShoppingCartController {
 		ShoppingItem item = new ShoppingItem(product, bookType);
 		return item;
 	}//createItem()
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public String items() {
+		return "shoppingCart/item";
+	}
 }//class ShoppingCartController
