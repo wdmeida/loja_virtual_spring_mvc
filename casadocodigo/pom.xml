@@ -132,5 +132,12 @@
 		<artifactId>hibernate-validator</artifactId>
 		<version>4.1.0.Final</version>
 	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+	<dependency>
+	    <groupId>com.amazonaws</groupId>
+	    <artifactId>aws-java-sdk</artifactId>
+	    <version>1.11.100</version>
+	</dependency>
    </dependencies>
 </project>
