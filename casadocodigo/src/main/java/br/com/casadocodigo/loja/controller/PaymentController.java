@@ -46,6 +46,7 @@ public class PaymentController {
 			String uriToPay = "http://book-payment.herokuapp.com/payment";
 			
 			try {
+				@SuppressWarnings("unused")
 				String response = restTemplate.postForObject(uriToPay, new PaymentData(total), String.class);
 				return "redirect:/payment/success";
 			} catch (HttpClientErrorException e) {

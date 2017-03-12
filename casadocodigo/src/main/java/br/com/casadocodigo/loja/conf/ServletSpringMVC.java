@@ -7,15 +7,18 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+	/*
+	 * Quando as configurações devem estar disponíveis antes do Servlet do Spring MVC (como é o caso do filtro
+	 * do Spring Security), elas devem ser declaradas no método getRootConfigClasses. Ele faz com que as classes
+	 * sejam lidas e carregadas dentro de um Listener que é lido quando o servidor sobe. 
+	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return null;
+		return new Class[] { SecurityConfiguration.class };
 	}//getRootConfigClasses()
 	
-	/*
-	 * Retorna uma ou mais classes responsáveis por indicar quais outras classes devem ser lidas 
-	 * durante o carregamento da aplicação web.
-	 */
+	/*Define quais classes devem ser carregadas na inicialização do Servlet Spring MVC. Geralmente, as classes
+	carregadas aqui são as que definem as diversas configurações de funcionamento.*/
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		return new Class[]{ AppWebConfiguration.class, //Define as configurações da aplicação.
