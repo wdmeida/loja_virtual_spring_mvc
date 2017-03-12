@@ -14,16 +14,18 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { SecurityConfiguration.class };
+		return new Class[] { AppWebConfiguration.class, 	//Classe com as configurações da aplicação.
+							 SecurityConfiguration.class, 	//Configurações de segurança.
+							 JPAConfiguration.class,		//Configurações de acesso a base de dados.
+							 AmazonConfiguration.class		//Configurações de acesso ao S3 Ninja.
+							}; 
 	}//getRootConfigClasses()
 	
 	/*Define quais classes devem ser carregadas na inicialização do Servlet Spring MVC. Geralmente, as classes
 	carregadas aqui são as que definem as diversas configurações de funcionamento.*/
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{ AppWebConfiguration.class, //Define as configurações da aplicação.
-							JPAConfiguration.class,
-							AmazonConfiguration.class }; //Define as configurações de acesso ao bd.
+		return new Class[]{ }; 
 	}//getServletConfigClasses()
 	
 	/*

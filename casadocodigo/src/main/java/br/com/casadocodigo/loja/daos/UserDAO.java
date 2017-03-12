@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import br.com.casadocodigo.loja.models.SystemUser;
 
 /*
- * Implememnta a interface responsável por controlar o mecanismo de autenticação do Spring Security.
+ * Implementa a interface responsável por controlar o mecanismo de autenticação do Spring Security.
  */
 @Repository
 public class UserDAO implements UserDetailsService {
@@ -27,7 +27,7 @@ public class UserDAO implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		String jpql = "select u from User u where u.login = :login";
+		String jpql = "select u from SystemUser u where u.login = :login";
 		
 		List<SystemUser> users = em.createQuery(jpql, SystemUser.class)
 							 .setParameter("login", username).getResultList();
