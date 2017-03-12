@@ -1,5 +1,12 @@
 package br.com.casadocodigo.loja.conf;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,16 +15,22 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.google.common.cache.CacheBuilder;
 
 import br.com.casadocodigo.loja.controller.HomeController;
 import br.com.casadocodigo.loja.daos.ProductDAO;
 import br.com.casadocodigo.loja.io.FileSaver;
 import br.com.casadocodigo.loja.models.ShoppingCart;
+import br.com.casadocodigo.loja.viewresolver.JsonViewResolver;
 
 /*
  * O objetivo dessa classe é expor para o Servlet do Spring MVC quais são as classes que devem ser 
@@ -36,6 +49,7 @@ import br.com.casadocodigo.loja.models.ShoppingCart;
 								   ProductDAO.class,
 								   FileSaver.class,
 								   ShoppingCart.class })
+@EnableCaching //Habilita o uso do cache, para que o Spring possa começar a guardar retornos indicados com @Cacheable.
 public class AppWebConfiguration {
 	
 	/*
@@ -97,8 +111,41 @@ public class AppWebConfiguration {
 		return new StandardServletMultipartResolver();
 	}//multipartResolver()
 	
+	//Disponibiliza uma implementação para que o Spring saiba como fazer requisições HTTP.
 	@Bean
-	public RestTemplate restTemplate(){
+	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}//restTemplate()
+	
+	/*
+	 * Disponibiliza uma classe que seja responsável por efeticamente guardar os objetos que devem
+	 * ser cacheados. A implementação mas simples é returnar uma instância da classe ConcurrentMapCacheManager.
+	 * Para projetos que exigem mais configurações podemos utilizar uma biblioteca como a Guava, desenvolvida
+	 * pelo Google com várias classes que podem ser úteis em qualquer projeto..
+	 */
+	@Bean
+	public CacheManager cacheManager() {
+		CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder()
+															.maximumSize(100)
+															.expireAfterAccess(5, TimeUnit.MINUTES);
+		GuavaCacheManager cacheManager = new GuavaCacheManager();
+		cacheManager.setCacheBuilder(builder);
+		return cacheManager;
+	}//cacheManager()
+	
+	//Define quais formatos o Spring MVC deve retornar em suas requisições.
+	@Bean
+	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
+		//Cria uma lista e adiciona o ViewResolver que deseja retornar (geralmente JSON, XML e HTML).
+		List<ViewResolver> resolvers = new ArrayList<>();
+		//Trata páginas normais (JSP, HTML).
+		resolvers.add(internalResourceViewResolver());
+		//Trata JSON (deve ser implementado).
+		resolvers.add(new JsonViewResolver());
+		
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+		resolver.setViewResolvers(resolvers);
+		resolver.setContentNegotiationManager(manager);
+		return resolver;
+	}//contentNegotiatingViewResolver()
 }//class AppWebConfiguration
