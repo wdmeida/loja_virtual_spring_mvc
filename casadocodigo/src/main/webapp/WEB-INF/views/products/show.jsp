@@ -1,13 +1,12 @@
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
 
-<customTags:page bodyClass="" title="">
-	<article id="${product.title}" itemscope itemtype="http://schema.org/Book">
-		
+<customTags:pageTemplate bodyClass="container" title="${product.title }">
+	<article id="${product.title}" itemscope
+		itemtype="http://schema.org/Book">
 		<header id="product-highlight" class="clearfix">
 			<div id="product-overview" class="container">
 				<img itemprop="image" width="280px" height="395px"
@@ -45,6 +44,9 @@
 							<p class="variant-price">${price.value}</p>
 						</li>
 					</c:forEach>
+
+
+
 
 				</ul>
 
@@ -86,4 +88,4 @@
 
 	</article>
 
-</customTags:page>
+</customTags:pageTemplate>

@@ -7,7 +7,7 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
 
 <fmt:message key="shoppingCart.title" var="title" />
-<customTags:page bodyClass="cart" title="${title}">
+<customTags:pageTemplate bodyClass="cart" title="${title}">
 <jsp:attribute name="extraScripts">
 <script>
 	$(function() {
@@ -146,4 +146,4 @@
 		</h2>
 	</section>
 </jsp:body>	
-</customTags:page>
+</customTags:pageTemplate>

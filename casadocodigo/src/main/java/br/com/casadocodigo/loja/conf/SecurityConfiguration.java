@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /*
  * Implementa a classe WebSecurityAdapter, que já possui uma infraestrutura pronta para 
@@ -32,7 +33,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
 			.antMatchers("/produtos/**").permitAll()
 			.anyRequest().authenticated()
-			.and().formLogin();
+			.and()
+			.formLogin().loginPage("/login").permitAll()
+			.and()
+			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	}//configure()
 	
 	@Autowired(required = true)
@@ -42,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		/*Define o objeto que informa os detalhes de autenticação e força que as senhas
 		sejam armazenadas usando BCrypt como método de criptografia.*/
-		auth.userDetailsService(users)
-			.passwordEncoder(new BCryptPasswordEncoder());
+		auth.userDetailsService(users)/*
+			.passwordEncoder(new BCryptPasswordEncoder())*/;
 	}//configure()
 }//class SecurityConfiguration

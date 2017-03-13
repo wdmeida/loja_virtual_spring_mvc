@@ -27,15 +27,12 @@ public class UserDAO implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		String jpql = "select u from SystemUser u where u.login = :login";
-		
-		List<SystemUser> users = em.createQuery(jpql, SystemUser.class)
-							 .setParameter("login", username).getResultList();
-		
-		if (users.isEmpty()) {
-			throw new UsernameNotFoundException("O usuário " + username + " não existe");
-		}
-		return users.get(0);
+			String jpql = "select u from SystemUser u where u.login = :login";
+			List<SystemUser> users = em.createQuery(jpql,SystemUser.class).setParameter("login", username).getResultList();
+			if(users.isEmpty()){
+				throw new UsernameNotFoundException("O usuario "+ username + " não existe");
+			}
+			return users.get(0);
 	}//loadUserByUsername()
 
 }

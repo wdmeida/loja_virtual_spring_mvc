@@ -1,34 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Listando Produtos</title>
-	</head>
-	<body>
-		<table>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
+
+<customTags:pageTemplate bodyClass="container" title="Produtos">
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal" var="user"/>
+		<spring:message code="users.welcome" arguments="${user.name}"/>
+	</sec:authorize>
+	
+	<div>
+		${success}
+	</div>
+	<ul class="menu">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<li><a href="${spring:mvcUrl('PC#form').build()}">Cadastrar novo produto</a></li>
+		</sec:authorize>
+	</ul>
+	<table>
+		<tr>
+			<td>Titulo</td>
+			<td>Valores</td>
+		</tr>
+		<c:forEach items="${products}" var="product">
 			<tr>
-				<td>Título</td>
-				<td>Valores</td>
+				<td><a href="${spring:mvcUrl('PC#show').arg(0,product.id).build()}">${product.title}</a></td>
+				<td>
+					<c:forEach items="${product.prices}" var="price">
+						[${price.value} - ${price.bookType}]
+					</c:forEach>
+				</td>
 			</tr>
-			<c:forEach items="${products }" var="product">
-				<tr>
-					<td>
-						<a href="${spring:mvcUrl('PC#show').arg(0, product.id).build()}">
-							${product.title }
-						</a>
-					</td>
-					<td>
-						<c:forEach items="${product.prices }" var="price">
-							[${price.value } - ${price.bookType }]
-						</c:forEach>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</body>
-</html>
+		</c:forEach>
+	</table>
+</customTags:pageTemplate>	
+
+    Contact GitHub API Training Shop Blog About 
+
