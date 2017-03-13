@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /*
@@ -42,11 +42,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired(required = true)
 	private UserDetailsService users;
 	
+	//Configura o controle de acesso do Spring Security informando qual objeto possui as informações.
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		/*Define o objeto que informa os detalhes de autenticação e força que as senhas
 		sejam armazenadas usando BCrypt como método de criptografia.*/
 		auth.userDetailsService(users)/*
 			.passwordEncoder(new BCryptPasswordEncoder())*/;
+	}//configure()
+	
+	//Libera o acesso a qualquer URL que comece com resources.
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/resources/**");
 	}//configure()
 }//class SecurityConfiguration
