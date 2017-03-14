@@ -14,28 +14,25 @@
 	<div>
 		${success}
 	</div>
-	<ul class="menu">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<li><a href="${spring:mvcUrl('PC#form').build()}">Cadastrar novo produto</a></li>
-		</sec:authorize>
-	</ul>
-	<table>
-		<tr>
-			<td>Titulo</td>
-			<td>Valores</td>
-		</tr>
-		<c:forEach items="${products}" var="product">
+	<table class="table table-striped">
+		<thead class="thead-inverse">
 			<tr>
-				<td><a href="${spring:mvcUrl('PC#show').arg(0,product.id).build()}">${product.title}</a></td>
-				<td>
-					<c:forEach items="${product.prices}" var="price">
-						[${price.value} - ${price.bookType}]
-					</c:forEach>
-				</td>
+				<th>Titulo</th>
+				<th>Valores</th>
 			</tr>
-		</c:forEach>
+		</thead>
+		<tbody>
+			<c:forEach items="${products}" var="product">
+				<tr>
+					<td><a href="${spring:mvcUrl('PC#show').arg(0,product.id).build()}">${product.title}</a></td>
+					<td>
+						R$ 
+						<c:forEach items="${product.prices}" var="price">
+							[${price.value} - ${price.bookType}]
+						</c:forEach>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 </customTags:pageTemplate>	
-
-    Contact GitHub API Training Shop Blog About 
-

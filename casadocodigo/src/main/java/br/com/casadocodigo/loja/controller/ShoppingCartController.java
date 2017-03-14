@@ -36,6 +36,6 @@ public class ShoppingCartController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String items() {
-		return "shoppingCart/item";
+		return "shoppingCart/items";
 	}
 }//class ShoppingCartController

@@ -45,7 +45,7 @@ public class ProductsController {
 	
 		//Define no construtor para qual view será devolvida um objeto ModelAndView.
 		ModelAndView modelAndView = new ModelAndView("products/form");
-		modelAndView.addObject("types", BookType.values());
+		modelAndView.addObject("bookTypes", BookType.values());
 		
 		return modelAndView;
 	}//form()
