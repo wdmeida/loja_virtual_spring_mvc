@@ -4,7 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
 
-<customTags:pageTemplate bodyClass="container" title="${product.title }">
+<customTags:pageTemplate title="${product.title }">
 	
 	<article id="${product.title}">
 		

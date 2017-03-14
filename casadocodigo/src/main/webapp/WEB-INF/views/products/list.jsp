@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
 
-<customTags:pageTemplate bodyClass="container" title="Produtos">
+<customTags:pageTemplate title="Produtos">
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication property="principal" var="user"/>
 		<spring:message code="users.welcome" arguments="${user.name}"/>

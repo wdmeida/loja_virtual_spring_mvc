@@ -1,5 +1,4 @@
 <%@attribute name="title" required="true" %>
-<%@attribute name="bodyClass" required="true" %>
 <%@attribute name="extraScripts" fragment="true" %>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
@@ -37,12 +36,12 @@
 		<title>${title}</title>
 	</head>
 	
-	<body class="${bodyClass}">
+	<body>
 	
 		<%@include file="/WEB-INF/header.jsp" %>
-	
-		<jsp:doBody/>
-	
+		<div class="container">
+			<jsp:doBody/>
+		</div>
 		<%@include file="/WEB-INF/footer.jsp" %>
 		
 		<jsp:invoke fragment="extraScripts"/>

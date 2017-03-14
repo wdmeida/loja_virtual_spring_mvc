@@ -7,7 +7,7 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
 
 <fmt:message key="shoppingCart.title" var="title" />
-<customTags:pageTemplate bodyClass="cart" title="${title}">
+<customTags:pageTemplate title="${title}">
 <jsp:attribute name="extraScripts">
 <script>
 	$(function() {

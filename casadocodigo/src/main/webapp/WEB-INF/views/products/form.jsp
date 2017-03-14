@@ -4,7 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="customTags"%>
 
-<customTags:pageTemplate bodyClass="container" title="Cadastrar Produto">
+<customTags:pageTemplate title="Cadastrar Produto">
 	
 	<spring:hasBindErrors name="product">
 		<ul>
