@@ -1,8 +1,11 @@
 package br.com.casadocodigo.loja.conf;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -49,4 +52,14 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 		 */
 		registration.setMultipartConfig(new MultipartConfigElement(""));
 	}//customizeRegistration()
+	
+	/*
+	 * Define o DataSource que deve ser lido ao inicializar o servidor. Utilizamos a configuração de 'dev'.
+	 */
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
+		servletContext.addListener(RequestContextListener.class);
+		servletContext.setInitParameter("spring.profiles.active", "dev");
+	}//onStartup()
 }//class ServletSpringMVC

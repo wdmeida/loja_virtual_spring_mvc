@@ -6,6 +6,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -14,8 +16,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-//Indica que será usado o controle transacional do Spring.
-@EnableTransactionManagement
+@Configuration	//Informa que é uma classe de configuração.
+@EnableTransactionManagement //Indica que será usado o controle transacional do Spring.
 public class JPAConfiguration {
 	//Define o pacote onde estão as classes modelo, que serão mapeadas para persistência dos dados.
 	@Bean
@@ -33,6 +35,7 @@ public class JPAConfiguration {
 	
 	//Registra o driver e as configurações de acesso a base de dados utilizada.
 	@Bean
+	@Profile("dev") //Define em que ambiente está configuração deve ser injetada.
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
