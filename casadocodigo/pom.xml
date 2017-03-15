@@ -201,6 +201,14 @@
 	    <version>4.2.1.RELEASE</version>
 	</dependency>
 	
+	<!-- Spring security test -->
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-test</artifactId>
+		<version>4.2.1.RELEASE</version>
+		<scope>test</scope>
+	</dependency>
+	
 	<!-- JUnit -->
 	<dependency>
 		<groupId>junit</groupId>
@@ -215,6 +223,13 @@
 		<artifactId>spring-test</artifactId>
 		<version>4.1.0.RELEASE</version>
 		<scope>test</scope>
+	</dependency>
+	
+	<!-- Especificação para envio de email -->
+	<dependency>
+		<groupId>javax.mail</groupId>
+		<artifactId>mail</artifactId>
+		<version>1.4.7</version>
 	</dependency>
 	
    </dependencies>

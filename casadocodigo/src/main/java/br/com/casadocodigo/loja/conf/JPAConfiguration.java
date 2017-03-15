@@ -16,7 +16,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Configuration	//Informa que é uma classe de configuração.
+/*
+ * Indica que a classe pode ser usada como uma fonte de definições de @Bean. @Bean diz ao Spring que um método retornará
+ * um objeto que deve ser registrado como um bean no contexto da aplicação.
+ */
+@Configuration	
 @EnableTransactionManagement //Indica que será usado o controle transacional do Spring.
 public class JPAConfiguration {
 	//Define o pacote onde estão as classes modelo, que serão mapeadas para persistência dos dados.
