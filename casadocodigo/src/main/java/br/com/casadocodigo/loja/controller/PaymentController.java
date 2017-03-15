@@ -25,9 +25,8 @@ public class PaymentController {
 	@Autowired
 	private ShoppingCart shoppingCart;
 	/*
-	 * Disponibiliza diversos métodos, que podem ser usados em diversos tipos de requisições.
-	 * Para conseguir a injeção deste objeto, lembre-se de alterar a classe AppWebConfiguration
-	 * para registar o bean no container do Spring.
+	 * Disponibiliza diversos métodos, que podem ser usados em diversos tipos de requisições. Para conseguir a injeção deste objeto, 
+	 * lembre-se de alterar a classe AppWebConfiguration para registar o bean no container do Spring.
 	 */
 	@Autowired
 	private RestTemplate restTemplate;
@@ -57,8 +56,9 @@ public class PaymentController {
 			
 			try {
 				restTemplate.postForObject(uriToPay, new PaymentData(total), String.class);
-				//Enviando email.
-				sendNewPurchaseMail(user);
+				//Enviando email. Precisa verificar.
+				//sendNewPurchaseMail(user);
+				shoppingCart.emptyCart(); //Limpa o carrinho apenas teste.
 				return new ModelAndView("redirect:/payment/success");
 			} catch (HttpClientErrorException e) {
 				return new ModelAndView("redirect:/payment/error");
@@ -75,4 +75,14 @@ public class PaymentController {
 		email.setText("corpo do email");
 		mailer.send(email);
 	}//sendNewPurchaseMail()
+	
+	@RequestMapping("/success")
+	public String paymentSuccess() {
+		return "payment/success";
+	}//paymentSuccess()
+	
+	@RequestMapping("/error")
+	public String paymentError() {
+		return "payment/error";
+	}
 }//class PaymentController

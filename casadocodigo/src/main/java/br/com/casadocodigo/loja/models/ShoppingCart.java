@@ -58,4 +58,8 @@ public class ShoppingCart {
 	public boolean isEmpty() {
 		return items.isEmpty();
 	}
+	
+	public void emptyCart() {
+		this.items.clear();
+	}
 }//class ShoppingCart

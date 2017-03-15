@@ -25,18 +25,17 @@
 				</div>
 			</div>
 			
-			<div class=""></div>
 			<div class="form-group">
 				<label for="numeroPaginas" class="col-sm-2 control-label">Número de paginas</label>
 				<div class="col-sm-10">
-					<form:input path="pages" cssClass="form-control"/>
+					<form:input path="pages" cssClass="form-control datepicker"/>
 					<form:errors path="pages"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="releaseDate" class="col-sm-2 control-label">Data de lançamento</label>
 				<div class="col-sm-10">
-					<form:input path="releaseDate" type="date" cssClass="form-control" />			
+					<form:input path="releaseDate" type="date" cssClass="form-control" id="date" name="date" placeholder="MM/DD/YYYY" />			
 					<form:errors path="releaseDate"/>
 				</div>
 			</div>	
@@ -71,4 +70,20 @@
 			</div>
 		</form:form>
 	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var date_input = $('input[name="date"]');
+			var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+			var options = {
+					format: 'mm/dd/yyyy',
+					container: container,
+					todayHighlight: true,]
+					autoclose: true,
+			};
+			date_input.datepicker(options);
+		});
+	</script>
+
 </customTags:pageTemplate>
